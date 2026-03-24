@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Premier Inn — Sleep Like a King</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d1117;
+    --cream: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --burgundy: #6b1f2a;
+    --muted: #8a8070;
+    --white: #ffffff;
+    --card-bg: rgba(255,255,255,0.06);
+    --border: rgba(201,168,76,0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--ink);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 60px;
+    background: linear-gradient(to bottom, rgba(13,17,23,0.95), transparent);
+    backdrop-filter: blur(4px);
+    transition: background 0.4s;
+  }
+  nav.scrolled { background: rgba(13,17,23,0.97); }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 600; letter-spacing: 0.06em;
+    color: var(--gold);
+    text-decoration: none;
+  }
+  .logo span { color: var(--cream); font-style: italic; font-weight: 300; }
+
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--cream); text-decoration: none;
+    font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+    opacity: 0.75; transition: opacity 0.2s, color 0.2s;
+  }
+  .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold); color: var(--ink);
+    border: none; padding: 10px 24px; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: 13px;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 520px;
+    height: 520px;
+    right: -140px;
+    top: 80px;
+    z-index: 1;
+    background: radial-gradient(circle, rgba(201,168,76,0.24) 0%, rgba(201,168,76,0) 68%);
+    filter: blur(10px);
+    pointer-events: none;
+  }
+
+  .hero-layout {
+    position: relative;
+    z-index: 2;
+    width: min(1240px, 100%);
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 38px;
+    align-items: center;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 70% 60% at 60% 40%, rgba(107,31,42,0.28) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 50% at 20% 80%, rgba(201,168,76,0.12) 0%, transparent 60%),
+      linear-gradient(135deg, #0d1117 0%, #1a1208 50%, #0d1117 100%);
+  }
+  .hero-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(110deg, rgba(13,17,23,0.95) 15%, rgba(13,17,23,0.55) 52%, rgba(13,17,23,0.3) 100%),
+      url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=2100&q=80') center/cover no-repeat;
+    opacity: 0.58;
+  }
+
+  /* Animated grain */
+  .hero-bg::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4; pointer-events: none;
+  }
+
+  /* Diagonal golden lines */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 120px,
+      rgba(201,168,76,0.03) 120px, rgba(201,168,76,0.03) 121px
+    );
+  }
+
+  .hero-content {
+    position: relative; text-align: left;
+    max-width: 760px;
+    animation: heroReveal 1.2s cubic-bezier(0.22,1,0.36,1) both;
+  }
+  .hero-content::before {
+    content: '';
+    display: block;
+    width: 130px;
+    height: 1px;
+    margin-bottom: 16px;
+    background: linear-gradient(90deg, transparent, rgba(201,168,76,0.95), transparent);
+    opacity: 0.7;
+  }
+
+  @keyframes heroReveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; margin-bottom: 20px;
+    border: 1px solid var(--border); padding: 6px 20px; border-radius: 100px;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 300; line-height: 0.92;
+    letter-spacing: -0.01em;
+    margin-bottom: 28px;
+    text-shadow: 0 12px 45px rgba(0,0,0,0.45);
+  }
+  .hero-title em { font-style: italic; color: var(--gold); display: block; }
+
+  .hero-sub {
+    font-size: 16px; font-weight: 300; opacity: 0.65;
+    max-width: 490px; margin: 0 0 36px; line-height: 1.7;
+  }
+
+  .hero-btns { display: flex; gap: 16px; justify-content: flex-start; flex-wrap: wrap; }
+
+  .hero-trust {
+    margin-top: 26px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .trust-chip {
+    padding: 8px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(201,168,76,0.35);
+    background: rgba(15,19,24,0.62);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.86);
+    backdrop-filter: blur(6px);
+  }
+  .trust-chip:nth-child(2) {
+    border-color: rgba(201,168,76,0.55);
+    background: rgba(201,168,76,0.14);
+  }
+
+  .hero-showcase {
+    position: relative;
+    animation: heroReveal 1.35s cubic-bezier(0.22,1,0.36,1) both;
+    animation-delay: 0.15s;
+  }
+  .showcase-main {
+    position: relative;
+    height: 450px;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.36);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.48);
+  }
+  .showcase-main img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scale(1.02);
+  }
+  .showcase-main::before {
+    content: '';
+    position: absolute;
+    top: -35%;
+    left: -120%;
+    width: 58%;
+    height: 185%;
+    z-index: 1;
+    transform: rotate(14deg);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+    animation: heroSheen 8s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .showcase-main::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,17,23,0.72), rgba(13,17,23,0.1) 56%, transparent 76%);
+    pointer-events: none;
+  }
+  @keyframes heroSheen {
+    0%, 65% { left: -120%; }
+    100% { left: 150%; }
+  }
+  .showcase-tag {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    z-index: 2;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(245,240,232,0.3);
+    background: rgba(13,17,23,0.58);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cream);
+    backdrop-filter: blur(7px);
+  }
+  .showcase-float {
+    position: absolute;
+    z-index: 4;
+    border: 1px solid rgba(201,168,76,0.45);
+    background: rgba(15,19,24,0.76);
+    backdrop-filter: blur(9px);
+    border-radius: 10px;
+    padding: 10px 12px;
+    box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+  }
+  .showcase-float strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .showcase-float span {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.86);
+    white-space: nowrap;
+  }
+  .float-rating { right: -24px; top: 24px; }
+  .float-offer { left: -26px; bottom: 58px; }
+
+  .hero-kpis {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .kpi {
+    border: 1px solid rgba(201,168,76,0.3);
+    background: rgba(15,19,24,0.58);
+    border-radius: 10px;
+    padding: 12px 12px 10px;
+    text-align: left;
+    backdrop-filter: blur(6px);
+  }
+  .kpi strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 400;
+    color: var(--gold);
+    line-height: 0.95;
+    margin-bottom: 6px;
+  }
+  .kpi span {
+    font-size: 10px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.78);
+  }
+
+  .btn-primary {
+    background: var(--gold); color: var(--ink);
+    border: none; padding: 16px 40px; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 16px 40px rgba(201,168,76,0.25); }
+
+  .btn-ghost {
+    background: transparent; color: var(--cream);
+    border: 1px solid rgba(245,240,232,0.3); padding: 16px 40px; border-radius: 2px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  /* Scroll indicator */
+  .scroll-hint {
+    position: absolute; bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    opacity: 0.4; animation: pulse 2.5s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: ''; width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: grow 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+  @keyframes grow  { 0%{transform:scaleY(0);transform-origin:top} 100%{transform:scaleY(1);transform-origin:top} }
+
+  /* ── BOOKING PANEL ── */
+  .booking-section {
+    padding: 80px 40px;
+    background: linear-gradient(to bottom, rgba(13,17,23,0), rgba(13,17,23,1));
+  }
+
+  .booking-card {
+    max-width: 1100px; margin: 0 auto;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 8px; padding: 48px 52px;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+  }
+
+  .booking-card h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px; font-weight: 300; margin-bottom: 36px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .booking-card h2::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+
+  .booking-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 16px; align-items: end;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+  }
+  .field input, .field select {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--cream); padding: 14px 18px;
+    border-radius: 4px; font-family: 'DM Sans', sans-serif;
+    font-size: 15px; outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    appearance: none; -webkit-appearance: none;
+  }
+  .field input::placeholder { color: rgba(245,240,232,0.35); }
+  .field input:focus, .field select:focus {
+    border-color: var(--gold); background: rgba(201,168,76,0.06);
+  }
+  .field select option { background: #1a1208; color: var(--cream); }
+
+  .search-btn {
+    background: var(--gold); color: var(--ink);
+    border: none; padding: 14px 36px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    height: 52px;
+  }
+  .search-btn:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(201,168,76,0.3); }
+
+  /* ── ROOMS SECTION ── */
+  .section { padding: 100px 60px; }
+  .section-header { text-align: center; margin-bottom: 64px; }
+  .section-tag {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500; display: block; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 62px); font-weight: 300;
+    line-height: 1.05;
+  }
+  .section-title em { font-style: italic; color: var(--gold); }
+
+  .rooms-grid {
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+  }
+
+  .room-card {
+    border: 1px solid var(--border); border-radius: 6px;
+    overflow: hidden; transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    cursor: pointer; background: rgba(255,255,255,0.03);
+  }
+  .room-card:hover { transform: translateY(-8px); box-shadow: 0 32px 80px rgba(0,0,0,0.5); border-color: var(--gold); }
+  .room-card.active-search { border-color: var(--gold-light); box-shadow: 0 0 0 2px rgba(201,168,76,0.35); }
+
+  .room-img {
+    height: 240px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .room-img img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.55s ease;
+  }
+  .room-card:hover .room-img img { transform: scale(1.08); }
+  .room-img::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,17,23,0.4), rgba(13,17,23,0.04) 58%, transparent 78%);
+    pointer-events: none;
+  }
+
+  .room-img-deluxe,
+  .room-img-suite,
+  .room-img-premier { background: #11161d; }
+
+  .room-badge {
+    position: absolute; top: 16px; right: 16px;
+    background: var(--gold); color: var(--ink);
+    font-size: 10px; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 4px 12px; border-radius: 100px;
+  }
+
+  .room-info { padding: 28px 28px 32px; }
+  .room-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 400; margin-bottom: 10px;
+  }
+  .room-desc {
+    font-size: 13px; opacity: 0.6; line-height: 1.7;
+    margin-bottom: 22px; font-weight: 300;
+  }
+
+  .room-features {
+    display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px;
+  }
+  .feat {
+    font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    border: 1px solid var(--border); padding: 5px 12px; border-radius: 100px;
+    color: var(--muted);
+  }
+
+  .room-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 20px; border-top: 1px solid var(--border);
+  }
+  .room-price .amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px; font-weight: 300; color: var(--gold);
+    line-height: 1;
+  }
+  .room-price .per { font-size: 11px; opacity: 0.5; letter-spacing: 0.1em; }
+
+  .book-btn {
+    background: transparent; border: 1px solid var(--gold);
+    color: var(--gold); padding: 10px 22px; border-radius: 3px;
+    font-family: 'DM Sans', sans-serif; font-size: 12px;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .book-btn:hover { background: var(--gold); color: var(--ink); }
+
+  /* ── AMENITIES ── */
+  .amenities {
+    padding: 100px 60px;
+    background: linear-gradient(to bottom, #0d1117, #0a0c0f);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .amenities-inner { max-width: 1200px; margin: 0 auto; }
+
+  .amenities-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px;
+    margin-top: 64px;
+  }
+
+  .amenity {
+    text-align: center; padding: 40px 20px;
+    border: 1px solid var(--border); border-radius: 6px;
+    transition: all 0.3s; background: rgba(255,255,255,0.02);
+  }
+  .amenity:hover { border-color: var(--gold); background: rgba(201,168,76,0.04); transform: translateY(-4px); }
+
+  .amenity-icon { font-size: 40px; margin-bottom: 20px; display: block; }
+  .amenity-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-weight: 400; margin-bottom: 10px;
+  }
+  .amenity-desc { font-size: 13px; opacity: 0.55; line-height: 1.6; font-weight: 300; }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { padding: 100px 60px; }
+  .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 60px; }
+
+  .review {
+    background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+    border-radius: 6px; padding: 36px 32px;
+    transition: all 0.3s;
+  }
+  .review:hover { border-color: var(--gold); transform: translateY(-4px); }
+
+  .stars { color: var(--gold); font-size: 14px; letter-spacing: 2px; margin-bottom: 18px; }
+  .review-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px; font-weight: 300; font-style: italic;
+    line-height: 1.7; opacity: 0.85; margin-bottom: 24px;
+  }
+  .reviewer { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.5; }
+
+  /* ── GALLERY ── */
+  .gallery-section { padding: 80px 60px; }
+  .gallery-grid {
+    max-width: 1200px; margin: 60px auto 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 220px 220px;
+    gap: 12px;
+  }
+
+  .gal-item {
+    border-radius: 4px; overflow: hidden;
+    position: relative; cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .gal-item:hover { transform: scale(1.02); z-index: 2; }
+  .gal-item:first-child { grid-column: 1/3; grid-row: 1/3; }
+  .gal-item:nth-child(2) { grid-column: 3; }
+  .gal-item:nth-child(3) { grid-column: 4; }
+  .gal-item:nth-child(4) { grid-column: 3; }
+  .gal-item:nth-child(5) { grid-column: 4; }
+
+  .gal-inner {
+    width: 100%; height: 100%;
+    position: relative;
+  }
+  .gal-inner img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    transition: transform 0.55s ease;
+  }
+  .gal-item:hover .gal-inner img { transform: scale(1.08); }
+  .gal-inner::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(13,17,23,0.35), transparent 65%);
+    pointer-events: none;
+  }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 200;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+    padding: 20px;
+  }
+  .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+  .modal {
+    background: #0f1318; border: 1px solid var(--border);
+    border-radius: 8px; padding: 52px; max-width: 620px; width: 100%;
+    transform: translateY(30px); transition: transform 0.3s;
+    max-height: 90vh; overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .modal-overlay.open .modal { transform: translateY(0); }
+
+  .modal-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 36px;
+  }
+  .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 34px; font-weight: 300; }
+  .modal-close {
+    background: none; border: 1px solid var(--border); color: var(--cream);
+    width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+  .form-field { display: flex; flex-direction: column; gap: 8px; }
+  .form-field.full { grid-column: 1 / -1; }
+  .form-field label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); font-weight: 500;
+  }
+  .form-field input, .form-field select {
+    background: rgba(255,255,255,0.06); border: 1px solid var(--border);
+    color: var(--cream); padding: 12px 16px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-field input:focus, .form-field select:focus { border-color: var(--gold); }
+  .form-field input::placeholder { color: rgba(245,240,232,0.3); }
+  .form-field select option { background: #0f1318; }
+
+  .modal-summary {
+    background: rgba(201,168,76,0.07); border: 1px solid var(--border);
+    border-radius: 4px; padding: 20px 24px; margin-bottom: 28px;
+  }
+  .summary-row {
+    display: flex; justify-content: space-between;
+    font-size: 14px; padding: 4px 0;
+  }
+  .summary-row .label { opacity: 0.6; }
+  .summary-row .value { font-weight: 500; }
+  .summary-total {
+    border-top: 1px solid var(--border); margin-top: 12px; padding-top: 12px;
+    display: flex; justify-content: space-between; font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 400;
+  }
+  .summary-total .gold { color: var(--gold); }
+
+  .confirm-btn {
+    width: 100%; background: var(--gold); color: var(--ink);
+    border: none; padding: 18px; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif; font-size: 14px;
+    font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .confirm-btn:hover { background: var(--gold-light); }
+
+  /* ── SUCCESS ── */
+  .success-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    background: rgba(0,0,0,0.95); display: flex;
+    align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.4s;
+    flex-direction: column; gap: 24px; text-align: center; padding: 20px;
+  }
+  .success-overlay.open { opacity: 1; pointer-events: all; }
+  .success-icon { font-size: 72px; animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1); }
+  @keyframes popIn { from{transform:scale(0)} to{transform:scale(1)} }
+  .success-title { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 300; color: var(--gold); }
+  .success-sub { font-size: 16px; opacity: 0.6; max-width: 400px; line-height: 1.7; font-weight: 300; }
+  .success-ref { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--gold); margin-top: 8px; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 80px 60px 40px;
+    border-top: 1px solid var(--border);
+    background: #080a0d;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 60px; margin-bottom: 60px;
+  }
+  .footer-brand .logo { display: block; margin-bottom: 16px; font-size: 22px; }
+  .footer-brand p { font-size: 13px; opacity: 0.5; line-height: 1.7; font-weight: 300; }
+
+  .footer-col h4 {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 20px; font-weight: 500;
+  }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { color: var(--cream); text-decoration: none; font-size: 13px; opacity: 0.55; transition: opacity 0.2s; }
+  .footer-col a:hover { opacity: 1; color: var(--gold); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border); padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-bottom p { font-size: 12px; opacity: 0.35; }
+
+  /* Floating parallax dots */
+  .dot {
+    position: absolute; border-radius: 50%;
+    background: var(--gold); opacity: 0.06;
+    animation: float linear infinite;
+    pointer-events: none;
+  }
+  @keyframes float {
+    0%   { transform: translateY(0)   rotate(0deg); }
+    100% { transform: translateY(-120vh) rotate(360deg); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    .hero-layout {
+      grid-template-columns: 1fr;
+      gap: 22px;
+      padding: 96px 24px 42px;
+    }
+    .hero-content { text-align: center; max-width: 740px; margin: 0 auto; }
+    .hero-sub { margin: 0 auto 28px; }
+    .hero-btns { justify-content: center; }
+    .hero-trust { justify-content: center; }
+    .hero-showcase { max-width: 640px; margin: 0 auto; width: 100%; }
+    .showcase-main { height: 300px; }
+    .float-rating { right: 12px; top: 12px; }
+    .float-offer { left: 12px; bottom: 12px; }
+    .kpi { text-align: center; }
+    .booking-grid { grid-template-columns: 1fr 1fr; }
+    .booking-grid .search-btn { grid-column: 1/-1; }
+    .rooms-grid { grid-template-columns: 1fr; }
+    .amenities-grid { grid-template-columns: repeat(2,1fr); }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gal-item:first-child { grid-column: auto; grid-row: auto; }
+    .gal-item { grid-column: auto !important; grid-row: auto !important; height: 180px; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+    .section { padding: 60px 24px; }
+    .booking-card { padding: 32px 24px; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+
+  @media(max-width: 640px) {
+    nav { padding: 14px 14px; }
+    .logo { font-size: 22px; }
+    .nav-cta { padding: 8px 14px; font-size: 11px; letter-spacing: 0.06em; }
+
+    .hero { min-height: 96vh; padding-top: 0; }
+    .hero-layout {
+      padding: 84px 14px 28px;
+      gap: 14px;
+    }
+    .hero-content { padding: 0; }
+    .hero-title { font-size: clamp(42px, 14vw, 64px); }
+    .hero-sub { font-size: 14px; line-height: 1.55; margin-bottom: 28px; }
+    .hero-btns { gap: 10px; }
+    .btn-primary, .btn-ghost {
+      padding: 12px 20px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+    .hero-trust { margin-top: 14px; gap: 8px; }
+    .trust-chip {
+      font-size: 9px;
+      letter-spacing: 0.11em;
+      padding: 6px 10px;
+    }
+    .showcase-main { height: 220px; border-radius: 10px; }
+    .showcase-float { padding: 7px 8px; border-radius: 8px; }
+    .showcase-float strong { font-size: 13px; margin-bottom: 2px; }
+    .showcase-float span { font-size: 7px; letter-spacing: 0.1em; }
+    .showcase-tag {
+      left: 10px;
+      bottom: 10px;
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      padding: 5px 8px;
+    }
+    .float-offer { display: none; }
+    .hero-kpis { gap: 8px; margin-top: 8px; }
+    .kpi { padding: 8px 8px 7px; border-radius: 8px; }
+    .kpi strong { font-size: 20px; margin-bottom: 3px; }
+    .kpi span { font-size: 8px; letter-spacing: 0.1em; }
+    .scroll-hint { display: none; }
+
+    .booking-section { padding: 54px 14px; }
+    .booking-card { padding: 22px 16px; }
+    .booking-card h2 {
+      font-size: 28px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .booking-card h2::after { width: 100%; flex: none; }
+    .booking-grid { grid-template-columns: 1fr; gap: 12px; }
+    .field input, .field select { padding: 11px 12px; font-size: 14px; }
+    .search-btn { width: 100%; height: 44px; padding: 10px 16px; font-size: 12px; }
+
+    .section, .amenities, .testimonials, .gallery-section { padding: 52px 14px; }
+    .section-header { margin-bottom: 30px; }
+    .section-title { font-size: clamp(30px, 10vw, 40px); }
+    .rooms-grid {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      max-width: none;
+      margin: 0;
+      scroll-snap-type: x mandatory;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .rooms-grid::-webkit-scrollbar { display: none; }
+    .room-card {
+      flex: 0 0 82vw;
+      min-width: 82vw;
+      scroll-snap-align: start;
+    }
+    .room-img { height: 156px; }
+    .room-info { padding: 16px; }
+    .room-name { font-size: 22px; margin-bottom: 8px; }
+    .room-desc { font-size: 12px; line-height: 1.55; margin-bottom: 14px; }
+    .room-features { gap: 8px; margin-bottom: 14px; }
+    .feat { font-size: 9px; padding: 4px 8px; }
+    .room-footer { padding-top: 14px; }
+    .room-price .amount { font-size: 26px; }
+    .book-btn { padding: 8px 12px; font-size: 10px; }
+
+    .amenities-grid, .reviews-grid, .gallery-grid {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .amenities-grid::-webkit-scrollbar,
+    .reviews-grid::-webkit-scrollbar,
+    .gallery-grid::-webkit-scrollbar { display: none; }
+    .amenity, .review {
+      flex: 0 0 78vw;
+      min-width: 78vw;
+      scroll-snap-align: start;
+      padding: 22px 14px;
+    }
+    .gallery-grid {
+      grid-template-columns: none;
+      grid-template-rows: none;
+      margin-top: 24px;
+    }
+    .gal-item,
+    .gal-item:first-child,
+    .gal-item:nth-child(2),
+    .gal-item:nth-child(3),
+    .gal-item:nth-child(4),
+    .gal-item:nth-child(5) {
+      grid-column: auto;
+      grid-row: auto;
+      flex: 0 0 72vw;
+      min-width: 72vw;
+      height: 150px;
+      scroll-snap-align: start;
+    }
+
+    footer { padding: 52px 14px 22px; }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; margin-bottom: 30px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; }
+
+    .modal { padding: 22px 16px; }
+    .modal-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating Particles -->
+<div id="particles"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#top" class="logo">Premier <span>Inn</span></a>
+  <ul class="nav-links">
+    <li><a href="#rooms">Rooms</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+  </ul>
+  <button class="nav-cta" onclick="openModal('Deluxe City View', '₹7,499')">Book Now</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="hero-layout">
+    <div class="hero-content">
+      <span class="hero-eyebrow">★ Award-winning hospitality since 1987</span>
+      <h1 class="hero-title">
+        Sleep Like<br>
+        <em>a King</em>
+      </h1>
+      <p class="hero-sub">Where exceptional comfort meets timeless elegance. Every stay is crafted to be your finest night's rest.</p>
+      <div class="hero-btns">
+        <button class="btn-primary" onclick="document.getElementById('booking-section').scrollIntoView({behavior:'smooth'})">Check Availability</button>
+        <button class="btn-ghost" onclick="document.getElementById('rooms').scrollIntoView({behavior:'smooth'})">Explore Rooms</button>
+      </div>
+      <div class="hero-trust">
+        <span class="trust-chip">Luxury Bedding</span>
+        <span class="trust-chip">Breakfast Included</span>
+        <span class="trust-chip">Flexible Check-in</span>
+      </div>
+    </div>
+    <aside class="hero-showcase" aria-label="Featured Premier Inn experience">
+      <div class="showcase-main">
+        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80" alt="Premium hotel suite interior">
+        <span class="showcase-tag">Skyline Suite Experience</span>
+      </div>
+      <div class="showcase-float float-rating">
+        <strong>4.9</strong>
+        <span>Guest Favorite</span>
+      </div>
+      <div class="showcase-float float-offer">
+        <strong>15%</strong>
+        <span>Weekend Saver</span>
+      </div>
+      <div class="hero-kpis">
+        <div class="kpi"><strong>4.9</strong><span>Guest Rating</span></div>
+        <div class="kpi"><strong>24/7</strong><span>Concierge</span></div>
+      </div>
+    </aside>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- BOOKING PANEL -->
+<section class="booking-section" id="booking-section">
+  <div class="booking-card">
+    <h2><span style="color:var(--gold);font-style:italic">Reserve</span> Your Stay</h2>
+    <div class="booking-grid">
+      <div class="field">
+        <label>Check In</label>
+        <input type="date" id="checkin-input">
+      </div>
+      <div class="field">
+        <label>Check Out</label>
+        <input type="date" id="checkout-input">
+      </div>
+      <div class="field">
+        <label>Guests</label>
+        <select id="guests-input">
+          <option>1 Guest</option>
+          <option selected>2 Guests</option>
+          <option>3 Guests</option>
+          <option>4 Guests</option>
+          <option>5+ Guests</option>
+        </select>
+      </div>
+      <button class="search-btn" onclick="handleSearch()">Search →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ROOMS -->
+<section class="section" id="rooms">
+  <div class="section-header">
+    <span class="section-tag">Curated for you</span>
+    <h2 class="section-title">Our <em>Signature</em> Rooms</h2>
+  </div>
+  <div class="rooms-grid">
+
+    <div class="room-card" data-room="Classic Double" data-price="₹4,999">
+      <div class="room-img room-img-deluxe">
+        <img src="https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&w=1400&q=80" alt="Classic Double room with king bed" loading="lazy">
+        <span class="room-badge">Best Value</span>
+      </div>
+      <div class="room-info">
+        <div class="room-name">Classic Double</div>
+        <p class="room-desc">Our signature Hypnos bed paired with blackout curtains and a power shower. Everything you need, nothing you don't.</p>
+        <div class="room-features">
+          <span class="feat">King Bed</span>
+          <span class="feat">Free Wi-Fi</span>
+          <span class="feat">AC</span>
+          <span class="feat">TV</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">
+            <div class="amount">₹4,999</div>
+            <div class="per">/ night</div>
+          </div>
+          <button class="book-btn" onclick="openModal('Classic Double', '₹4,999')">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-card" data-room="Deluxe City View" data-price="₹7,499">
+      <div class="room-img room-img-suite">
+        <img src="https://images.unsplash.com/photo-1631049552240-59c37f38802b?auto=format&fit=crop&w=1400&q=80" alt="Deluxe City View room with modern interiors" loading="lazy">
+        <span class="room-badge">Popular</span>
+      </div>
+      <div class="room-info">
+        <div class="room-name">Deluxe City View</div>
+        <p class="room-desc">Elevated cityscape views from floor-to-ceiling windows. Upgraded toiletries, plush bathrobes and turn-down service.</p>
+        <div class="room-features">
+          <span class="feat">City View</span>
+          <span class="feat">Bathrobe</span>
+          <span class="feat">Minibar</span>
+          <span class="feat">Safe</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">
+            <div class="amount">₹7,499</div>
+            <div class="per">/ night</div>
+          </div>
+          <button class="book-btn" onclick="openModal('Deluxe City View', '₹7,499')">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="room-card" data-room="Executive Suite" data-price="₹14,999">
+      <div class="room-img room-img-premier">
+        <img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1400&q=80" alt="Executive Suite with luxury furnishings" loading="lazy">
+        <span class="room-badge" style="background:var(--burgundy);color:#fff">Luxury</span>
+      </div>
+      <div class="room-info">
+        <div class="room-name">Executive Suite</div>
+        <p class="room-desc">The pinnacle of Premier Inn luxury. A separate living area, walk-in wardrobe and butler service on request.</p>
+        <div class="room-features">
+          <span class="feat">Suite</span>
+          <span class="feat">Butler</span>
+          <span class="feat">Lounge</span>
+          <span class="feat">Jacuzzi</span>
+        </div>
+        <div class="room-footer">
+          <div class="room-price">
+            <div class="amount">₹14,999</div>
+            <div class="per">/ night</div>
+          </div>
+          <button class="book-btn" onclick="openModal('Executive Suite', '₹14,999')">Book Now</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities" id="amenities">
+  <div class="amenities-inner">
+    <div class="section-header">
+      <span class="section-tag">Included with every stay</span>
+      <h2 class="section-title">World-class <em>Amenities</em></h2>
+    </div>
+    <div class="amenities-grid">
+      <div class="amenity">
+        <span class="amenity-icon">🍳</span>
+        <div class="amenity-name">Breakfast Buffet</div>
+        <p class="amenity-desc">Freshly prepared hot and cold breakfast served daily from 6:30 AM</p>
+      </div>
+      <div class="amenity">
+        <span class="amenity-icon">🏊</span>
+        <div class="amenity-name">Rooftop Pool</div>
+        <p class="amenity-desc">Infinity pool with panoramic views, open all year round</p>
+      </div>
+      <div class="amenity">
+        <span class="amenity-icon">💆</span>
+        <div class="amenity-name">Wellness Spa</div>
+        <p class="amenity-desc">Full-service spa featuring massages, facials and steam rooms</p>
+      </div>
+      <div class="amenity">
+        <span class="amenity-icon">🏋️</span>
+        <div class="amenity-name">Fitness Centre</div>
+        <p class="amenity-desc">State-of-the-art gym open 24 hours a day</p>
+      </div>
+      <div class="amenity">
+        <span class="amenity-icon">🍷</span>
+        <div class="amenity-name">Bar & Lounge</div>
+        <p class="amenity-desc">Curated cocktail menu and fine wines in our signature bar</p>
+      </div>
+      <div class="amenity">
+        <span class="amenity-icon">🚗</span>
+        <div class="amenity-name">Valet Parking</div>
+        <p class="amenity-desc">Complimentary valet parking for all hotel guests</p>
+      </div>
+      <div class="amenity">
+        <span class="amenity-icon">📶</span>
+        <div class="amenity-name">Superfast Wi-Fi</div>
+        <p class="amenity-desc">1 Gbps fibre across all rooms and public areas</p>
+      </div>
+      <div class="amenity">
+        <span class="amenity-icon">🛎️</span>
+        <div class="amenity-name">24/7 Concierge</div>
+        <p class="amenity-desc">Our team is available at any hour for any request</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="gallery">
+  <div class="section-header">
+    <span class="section-tag">Life at Premier Inn</span>
+    <h2 class="section-title">A Visual <em>Journey</em></h2>
+  </div>
+  <div class="gallery-grid">
+    <div class="gal-item"><div class="gal-inner gal-1"><img src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1400&q=80" alt="Premier Inn grand lobby" loading="lazy"></div></div>
+    <div class="gal-item"><div class="gal-inner gal-2"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80" alt="City skyline from hotel room window" loading="lazy"></div></div>
+    <div class="gal-item"><div class="gal-inner gal-3"><img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80" alt="Hotel rooftop pool area" loading="lazy"></div></div>
+    <div class="gal-item"><div class="gal-inner gal-4"><img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?auto=format&fit=crop&w=1200&q=80" alt="Fine dining and lounge setup" loading="lazy"></div></div>
+    <div class="gal-item"><div class="gal-inner gal-5"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=80" alt="Spa and wellness room" loading="lazy"></div></div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="testimonials" id="reviews">
+  <div class="testimonials-inner">
+    <div class="section-header">
+      <span class="section-tag">4.9 / 5 average rating</span>
+      <h2 class="section-title">Guests <em>Love</em> Us</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"I have stayed in five-star hotels across the world, but Premier Inn's Hypnos bed is simply incomparable. The best sleep of my life."</p>
+        <div class="reviewer">— Priya M. · Mumbai</div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Spotless rooms, extraordinary staff, and a breakfast spread that sets the tone for the perfect business trip."</p>
+        <div class="reviewer">— James H. · London</div>
+      </div>
+      <div class="review">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"The executive suite was beyond anything I expected. The butler service and cityscape views made our anniversary truly unforgettable."</p>
+        <div class="reviewer">— Ananya & Rohan · Delhi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo">Premier <span>Inn</span></a>
+        <p>Sleep like a king every night. Premier Inn offers award-winning comfort at over 800 locations across the UK and beyond.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Stay</h4>
+        <ul>
+          <li><a href="#rooms">Rooms & Suites</a></li>
+          <li><a href="#amenities">Breakfast</a></li>
+          <li><a href="#amenities">Spa & Wellness</a></li>
+          <li><a href="#booking-section">Business Travel</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Discover</h4>
+        <ul>
+          <li><a href="#booking-section">Locations</a></li>
+          <li><a href="#rooms">Special Offers</a></li>
+          <li><a href="#reviews">Loyalty Club</a></li>
+          <li><a href="#booking-section">Gift Cards</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Help</h4>
+        <ul>
+          <li><a href="#booking-section">Manage Booking</a></li>
+          <li><a href="mailto:reservations@premierinn.com">Contact Us</a></li>
+          <li><a href="#reviews">FAQs</a></li>
+          <li><a href="#top">Accessibility</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Premier Inn Hotels Ltd. All rights reserved.</p>
+      <p style="opacity:0.25">Privacy Policy · Terms & Conditions · Cookie Settings</p>
+    </div>
+  </div>
+</footer>
+
+<!-- BOOKING MODAL -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div style="font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px">Complete your reservation</div>
+        <div class="modal-title" id="modal-room-name">Classic Double</div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+
+    <div class="form-grid">
+      <div class="form-field">
+        <label>First Name</label>
+        <input type="text" placeholder="Arjun" id="f-first">
+      </div>
+      <div class="form-field">
+        <label>Last Name</label>
+        <input type="text" placeholder="Sharma" id="f-last">
+      </div>
+      <div class="form-field full">
+        <label>Email Address</label>
+        <input type="email" placeholder="arjun@email.com" id="f-email">
+      </div>
+      <div class="form-field">
+        <label>Check In</label>
+        <input type="date" id="f-checkin">
+      </div>
+      <div class="form-field">
+        <label>Check Out</label>
+        <input type="date" id="f-checkout">
+      </div>
+      <div class="form-field">
+        <label>Guests</label>
+        <select id="f-guests">
+          <option>1 Guest</option>
+          <option selected>2 Guests</option>
+          <option>3 Guests</option>
+          <option>4 Guests</option>
+        </select>
+      </div>
+      <div class="form-field">
+        <label>Room Type</label>
+        <select id="f-room">
+          <option>Classic Double</option>
+          <option>Deluxe City View</option>
+          <option>Executive Suite</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label>Special Requests (optional)</label>
+        <input type="text" placeholder="Early check-in, high floor, etc." id="f-req">
+      </div>
+    </div>
+
+    <div class="modal-summary" id="modal-summary">
+      <div class="summary-row"><span class="label">Room</span><span class="value" id="s-room">Classic Double</span></div>
+      <div class="summary-row"><span class="label">Dates</span><span class="value" id="s-dates">—</span></div>
+      <div class="summary-row"><span class="label">Guests</span><span class="value" id="s-guests">2</span></div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span class="gold" id="s-total">₹4,999</span>
+      </div>
+    </div>
+
+    <button class="confirm-btn" onclick="confirmBooking()">Confirm Booking →</button>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="success">
+  <div class="success-icon">🎉</div>
+  <div class="success-title">Booking Confirmed!</div>
+  <p class="success-sub">Your reservation has been secured. A confirmation email is on its way to your inbox.</p>
+  <div class="success-ref" id="booking-ref">Ref: PI-000000</div>
+  <button class="btn-primary" style="margin-top:16px" onclick="document.getElementById('success').classList.remove('open')">Back to Home</button>
+</div>
+
+<script>
+  // Particles
+  const container = document.getElementById('particles');
+  for(let i=0;i<12;i++){
+    const d = document.createElement('div');
+    const size = Math.random()*120+40;
+    d.className='dot';
+    d.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;bottom:-${size}px;animation-duration:${Math.random()*30+20}s;animation-delay:-${Math.random()*30}s;opacity:${Math.random()*0.05+0.02}`;
+    container.appendChild(d);
+  }
+
+  // Nav scroll
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>60);
+  });
+
+  // Set default dates
+  const today = new Date();
+  const tomorrow = new Date(today); tomorrow.setDate(tomorrow.getDate()+1);
+  const dayAfter = new Date(today); dayAfter.setDate(dayAfter.getDate()+2);
+  const fmt = d => d.toISOString().split('T')[0];
+
+  const checkinInput = document.getElementById('checkin-input');
+  const checkoutInput = document.getElementById('checkout-input');
+  const modalCheckinInput = document.getElementById('f-checkin');
+  const modalCheckoutInput = document.getElementById('f-checkout');
+  const guestsInput = document.getElementById('guests-input');
+  const modalGuestsInput = document.getElementById('f-guests');
+  const modalRoomInput = document.getElementById('f-room');
+
+  const minCheckin = fmt(tomorrow);
+  checkinInput.min = minCheckin;
+  checkoutInput.min = minCheckin;
+  modalCheckinInput.min = minCheckin;
+  modalCheckoutInput.min = minCheckin;
+
+  checkinInput.value = minCheckin;
+  checkoutInput.value = fmt(dayAfter);
+  modalCheckinInput.value = minCheckin;
+  modalCheckoutInput.value = fmt(dayAfter);
+
+  function guestsCount(value){
+    const match = String(value).match(/\d+/);
+    return match ? parseInt(match[0], 10) : 2;
+  }
+
+  function setMinCheckout(checkinEl, checkoutEl){
+    if(!checkinEl.value) return;
+    const min = new Date(checkinEl.value);
+    min.setDate(min.getDate()+1);
+    const minValue = fmt(min);
+    checkoutEl.min = minValue;
+    if(!checkoutEl.value || new Date(checkoutEl.value) <= new Date(checkinEl.value)){
+      checkoutEl.value = minValue;
+    }
+  }
+
+  setMinCheckout(checkinInput, checkoutInput);
+  setMinCheckout(modalCheckinInput, modalCheckoutInput);
+  checkinInput.addEventListener('change', () => setMinCheckout(checkinInput, checkoutInput));
+  modalCheckinInput.addEventListener('change', () => {
+    setMinCheckout(modalCheckinInput, modalCheckoutInput);
+    updateSummary();
+  });
+
+  // Modal
+  let currentPrice = '₹4,999';
+
+  function openModal(room, price){
+    currentPrice = price;
+    document.getElementById('modal-room-name').textContent = room;
+    document.getElementById('s-room').textContent = room;
+    document.getElementById('s-total').textContent = price;
+    if(!Array.from(modalRoomInput.options).some(option => option.value === room)){
+      const dynamicOption = document.createElement('option');
+      dynamicOption.value = room;
+      dynamicOption.textContent = room;
+      modalRoomInput.appendChild(dynamicOption);
+    }
+    modalRoomInput.value = room;
+
+    // sync dates from main booking
+    const ci = checkinInput.value;
+    const co = checkoutInput.value;
+    if(ci) modalCheckinInput.value = ci;
+    if(co) modalCheckoutInput.value = co;
+    if(!Array.from(modalGuestsInput.options).some(option => option.value === guestsInput.value)){
+      const guestOption = document.createElement('option');
+      guestOption.value = guestsInput.value;
+      guestOption.textContent = guestsInput.value;
+      modalGuestsInput.appendChild(guestOption);
+    }
+    modalGuestsInput.value = guestsInput.value;
+
+    updateSummary();
+    document.getElementById('modal').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+
+  function closeModal(){
+    document.getElementById('modal').classList.remove('open');
+    document.body.style.overflow='';
+  }
+
+  document.getElementById('modal').addEventListener('click', e => {
+    if(e.target===document.getElementById('modal')) closeModal();
+  });
+
+  function updateSummary(){
+    const ci = modalCheckinInput.value;
+    const co = modalCheckoutInput.value;
+    const guests = guestsCount(modalGuestsInput.value);
+    document.getElementById('s-room').textContent = modalRoomInput.value;
+    document.getElementById('s-guests').textContent = guests;
+
+    if(ci && co){
+      const d1 = new Date(ci);
+      const d2 = new Date(co);
+      if(d2 <= d1){
+        document.getElementById('s-dates').textContent = 'Please select valid dates';
+        document.getElementById('s-total').textContent = currentPrice;
+        return;
+      }
+
+      const nights = Math.max(1, Math.round((d2-d1)/(1000*60*60*24)));
+      const base = parseInt(currentPrice.replace(/[^0-9]/g,''), 10);
+      document.getElementById('s-dates').textContent = `${ci} → ${co} (${nights} night${nights>1?'s':''})`;
+      document.getElementById('s-total').textContent = '₹' + (base*nights).toLocaleString('en-IN');
+      return;
+    }
+
+    document.getElementById('s-dates').textContent = '—';
+    document.getElementById('s-total').textContent = currentPrice;
+  }
+
+  modalCheckoutInput.addEventListener('change', updateSummary);
+  modalGuestsInput.addEventListener('change', updateSummary);
+  modalRoomInput.addEventListener('change', updateSummary);
+
+  function handleSearch(){
+    const ci = checkinInput.value;
+    const co = checkoutInput.value;
+    const guestCount = guestsCount(guestsInput.value);
+
+    if(!ci || !co){
+      alert('Please select both check-in and check-out dates.');
+      return;
+    }
+    if(new Date(co)<=new Date(ci)){
+      alert('Check-out must be after check-in.');
+      return;
+    }
+
+    const recommendedRoom = guestCount > 2 ? 'Executive Suite' : 'Classic Double';
+    const targetCard = document.querySelector(`.room-card[data-room="${recommendedRoom}"]`);
+    document.querySelectorAll('.room-card').forEach(card => card.classList.remove('active-search'));
+
+    if(targetCard){
+      targetCard.classList.add('active-search');
+      targetCard.scrollIntoView({behavior:'smooth', block:'nearest', inline:'start'});
+      window.setTimeout(() => targetCard.classList.remove('active-search'), 2200);
+    }
+
+    document.getElementById('rooms').scrollIntoView({behavior:'smooth'});
+  }
+
+  function confirmBooking(){
+    const first = document.getElementById('f-first').value.trim();
+    const last  = document.getElementById('f-last').value.trim();
+    const email = document.getElementById('f-email').value.trim();
+    const ci = modalCheckinInput.value;
+    const co = modalCheckoutInput.value;
+    if(!first||!last||!email){
+      alert('Please fill in your name and email to continue.');
+      return;
+    }
+    if(!/^[^@]+@[^@]+\.[^@]+$/.test(email)){
+      alert('Please enter a valid email address.');
+      return;
+    }
+    if(!ci || !co || new Date(co)<=new Date(ci)){
+      alert('Please confirm valid check-in and check-out dates.');
+      return;
+    }
+    closeModal();
+    const ref = 'PI-' + Math.random().toString(36).slice(2,10).toUpperCase();
+    document.getElementById('booking-ref').textContent = `Ref: ${ref}`;
+    document.getElementById('success').classList.add('open');
+  }
+
+  document.querySelectorAll('.room-card').forEach(card => {
+    card.addEventListener('click', event => {
+      if(event.target.closest('.book-btn')) return;
+      openModal(card.dataset.room, card.dataset.price);
+    });
+  });
+
+  document.addEventListener('keydown', event => {
+    if(event.key === 'Escape'){
+      closeModal();
+      document.getElementById('success').classList.remove('open');
+    }
+  });
+
+  updateSummary();
+
+  // Intersection observer for card animations
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='translateY(0)';
+      }
+    });
+  },{threshold:0.1});
+
+  document.querySelectorAll('.room-card,.amenity,.review').forEach(el=>{
+    el.style.opacity='0';
+    el.style.transform='translateY(30px)';
+    el.style.transition='opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
